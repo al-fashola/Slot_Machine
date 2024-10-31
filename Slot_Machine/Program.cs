@@ -5,9 +5,14 @@ class Program
     static void Main(string[] args)
     {
         const int MATRIX_A = 3;
-        const int MATRIX_B = 3;
         const int NUMBER_OF_GAMES_OPTIONS = 4;
         const int MAX_SLOT_MACHINE_INT = 40;
+        const int CENTER_LINE_MODE = 1;
+        const int HORIZONTAL_LINE_MODE = 2;
+        const int VERTICAL_LINE_MODE = 3;
+        const int ALL_DIAGONOL_LINE_MODE = 4;
+
+        
         
         
 
@@ -17,10 +22,10 @@ class Program
         
         Console.WriteLine("Let's play a game! Ths name of the game is a slot machine");
         Console.WriteLine("You will have the following options: \n" +
-                          "1 - Play the center line \n" +
-                          "2 - Play all three horizontals \n" +
-                          "3 - Play all vertical lines \n" +
-                          "4 - Play diagonal lines \n");
+                          $"{CENTER_LINE_MODE} - Play the center line \n" +
+                          $"{HORIZONTAL_LINE_MODE} - Play all three horizontals \n" +
+                          $"{VERTICAL_LINE_MODE} - Play all vertical lines \n" +
+                          $"{ALL_DIAGONOL_LINE_MODE} - Play diagonal lines \n");
         
         Console.Write("Please enter your bet now: ");
         wager = Convert.ToDouble(Console.ReadLine());
@@ -35,7 +40,7 @@ class Program
         
         
         // assign the size of array
-        int[,] Array2d = new int[MATRIX_A,MATRIX_B];
+        int[,] grid = new int[MATRIX_A,MATRIX_A];
         
         //assign random integers into array slots
         Random rand = new Random();
@@ -43,24 +48,24 @@ class Program
         // This could be defined as a function/method to be repeatedly called for slot game replays
         for (int i = 0; i < MATRIX_A; i++)
         {
-            for (int j = 0; j < MATRIX_B; j++)
+            for (int j = 0; j < MATRIX_A; j++)
             {
-                Array2d[i,j] = rand.Next(0, MAX_SLOT_MACHINE_INT);
+                grid[i,j] = rand.Next(0, MAX_SLOT_MACHINE_INT);
             }
         }
         
         
         /*
-        Console.WriteLine(Array2d.Length);
+        Console.WriteLine(grid.Length);
         Console.WriteLine(gameMode);
         Console.WriteLine(wager);
         */
         
-        //Console.WriteLine(string.Join("", Array2d));  // how tp print a whole array?
+        //Console.WriteLine(string.Join("", grid));  // how tp print a whole array?
         
-        Console.WriteLine($"|{Array2d[0,0]}|{Array2d[0,1]}|{Array2d[0,2]}| \n" +
-                          $"|{Array2d[1,0]}|{Array2d[1,1]}|{Array2d[1,2]}| \n" +
-                          $"|{Array2d[2,0]}|{Array2d[2,1]}|{Array2d[2,2]}| \n");
+        Console.WriteLine($"|{grid[0,0]}|{grid[0,1]}|{grid[0,2]}| \n" +
+                          $"|{grid[1,0]}|{grid[1,1]}|{grid[1,2]}| \n" +
+                          $"|{grid[2,0]}|{grid[2,1]}|{grid[2,2]}| \n");
         
         double payoutRate = 0.0;
         double totalPayout = 0.0;
@@ -68,20 +73,20 @@ class Program
 
         // Logical breakdown to validate match in values accorss diagnals, horizontals, verticals
         // This could be done as a method which checks for all the true cases of matches
-        if (gameMode == 1)
+        if (gameMode == CENTER_LINE_MODE)
         {
             
         }
 
-        if (gameMode == 2)
+        if (gameMode == HORIZONTAL_LINE_MODE)
         {
             
         }
-        if (gameMode == 3)
+        if (gameMode == VERTICAL_LINE_MODE)
         {
             
         }
-        if (gameMode == 4)
+        if (gameMode == ALL_DIAGONOL_LINE_MODE)
         {
             
         }
