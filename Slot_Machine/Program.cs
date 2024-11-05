@@ -70,14 +70,26 @@ class Program
         double payoutRate = 0.0;
         double totalPayout = 0.0;
         char gameWin = 'N';
+        int centerValueInt = MATRIX_A / 2;
+        int middleValue = grid[centerValueInt, centerValueInt];
+        int matchCounter = 0;
+        
+        //Console.WriteLine(centerValue);
 
         // Logical breakdown to validate match in values across diagonals, horizontals, verticals
         // This could be done as a method which checks for all the true cases of matches
-        if (gameMode == CENTER_LINE_MODE && 
-            grid[1, 0] == grid[1, 1] && grid[1, 0] == grid[1, 2])
+        if (gameMode == CENTER_LINE_MODE )
         {
+            //grid[1, 0] == grid[1, 1] && grid[1, 0] == grid[1, 2]
+            for (int c = 0; c < MATRIX_A; c++)
+            {
+                if (middleValue == grid[centerValueInt, c]) matchCounter++;
+            }
+            if (matchCounter == MATRIX_A)
+            {
                 payoutRate = CENTER_LINE_PAYOUT;
                 gameWin = 'Y';
+            }
         }
         if (gameMode == HORIZONTAL_LINE_MODE)
         {
