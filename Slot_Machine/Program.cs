@@ -73,6 +73,7 @@ class Program
         int centerValueInt = MATRIX_A / 2;
         int middleValue = grid[centerValueInt, centerValueInt];
         int matchCounter = 0;
+        int firstValue = 0;
         
         //Console.WriteLine(centerValue);
 
@@ -93,14 +94,39 @@ class Program
         }
         if (gameMode == HORIZONTAL_LINE_MODE)
         {
-            payoutRate = HORIZONTAL_LINE_PAYOUT;
-            gameWin = 'Y';
+            matchCounter = 0;
+            for (int d = 0; d < MATRIX_A; d++)
+            {
+                firstValue = grid[d, 0];
+                for (int e = 0; e < MATRIX_A; e++)
+                {
+                   if (firstValue == grid[d,e]) matchCounter++;
+                }
+                if (matchCounter == MATRIX_A)
+                {
+                    payoutRate = HORIZONTAL_LINE_PAYOUT;
+                    gameWin = 'Y';
+                    break;
+                }
+            }
         }
         if (gameMode == VERTICAL_LINE_MODE)
         {
-            
-            payoutRate = VERTICAL_LINE_PAYOUT;
-            gameWin = 'Y';
+            matchCounter = 0;
+            for (int f= 0; f < MATRIX_A; f++)
+            {
+                firstValue = grid[0, f];
+                for (int g = 0; g < MATRIX_A; g++)
+                {
+                    if (firstValue == grid[g,f]) matchCounter++;
+                }
+                if (matchCounter == MATRIX_A)
+                {
+                    payoutRate = VERTICAL_LINE_PAYOUT;
+                    gameWin = 'Y';
+                    break;
+                }
+            }
         }
         if (gameMode == ALL_DIAGONOL_LINE_MODE && 
             ((grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2]) 
