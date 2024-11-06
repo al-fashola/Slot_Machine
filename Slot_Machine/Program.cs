@@ -6,7 +6,7 @@ class Program
     {
         const int MATRIX_A = 3;
         const int NUMBER_OF_GAMES_OPTIONS = 4;
-        const int MAX_SLOT_MACHINE_INT = 5;
+        const int MAX_SLOT_MACHINE_INT = 3;
         
         const int CENTER_LINE_MODE = 1;
         const int HORIZONTAL_LINE_MODE = 2;
@@ -115,9 +115,10 @@ class Program
         }
         if (gameMode == HORIZONTAL_LINE_MODE)
         {
-            matchCounter = 0;
+            
             for (int d = 0; d < MATRIX_A; d++)
             {
+                matchCounter = 0;
                 firstValue = grid[d, 0];
                 for (int e = 0; e < MATRIX_A; e++)
                 {
@@ -133,9 +134,9 @@ class Program
         }
         if (gameMode == VERTICAL_LINE_MODE)
         {
-            matchCounter = 0;
             for (int f= 0; f < MATRIX_A; f++)
             {
+                matchCounter = 0;
                 firstValue = grid[0, f];
                 for (int g = 0; g < MATRIX_A; g++)
                 {
