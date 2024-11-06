@@ -90,7 +90,7 @@ class Program
         }
         double payoutRate = 0.0;
         double totalPayout = 0.0;
-        char gameWin = 'N';
+        bool gameWin = false;
         int centerValueInt = MATRIX_A / 2;
         int middleValue = grid[centerValueInt, centerValueInt];
         int matchCounter = 0;
@@ -110,7 +110,7 @@ class Program
             if (matchCounter == MATRIX_A)
             {
                 payoutRate = CENTER_LINE_PAYOUT;
-                gameWin = 'Y';
+                gameWin = true;
             }
         }
         if (gameMode == HORIZONTAL_LINE_MODE)
@@ -126,7 +126,7 @@ class Program
                 if (matchCounter == MATRIX_A)
                 {
                     payoutRate = HORIZONTAL_LINE_PAYOUT;
-                    gameWin = 'Y';
+                    gameWin = true;
                     break;
                 }
             }
@@ -144,7 +144,7 @@ class Program
                 if (matchCounter == MATRIX_A)
                 {
                     payoutRate = VERTICAL_LINE_PAYOUT;
-                    gameWin = 'Y';
+                    gameWin = true;
                     break;
                 }
             }
@@ -154,9 +154,9 @@ class Program
              || (grid[2, 0] == grid[1, 1] && grid[1, 0] == grid[0, 2])))
         {
             payoutRate = ALL_DIAGONOL_LINE_PAYOUT;
-            gameWin = 'Y';
+            gameWin = true;
         }
-        if (gameWin == 'N')
+        if (gameWin == false)
         {
             Console.WriteLine("You Lose!");
         }
