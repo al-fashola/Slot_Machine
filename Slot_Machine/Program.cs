@@ -91,8 +91,7 @@ class Program
         double payoutRate = 0.0;
         double totalPayout = 0.0;
         bool gameWin = false;
-        int centerValueInt = MATRIX_A / 2;
-        int middleValue = grid[centerValueInt, centerValueInt];
+
         int matchCounter = 0;
         int firstValue = 0;
         
@@ -102,6 +101,9 @@ class Program
         // This could be done as a method which checks for all the true cases of matches
         if (gameMode == CENTER_LINE_MODE )
         {
+            int centerValueInt = MATRIX_A / 2;
+            int middleValue = grid[centerValueInt, centerValueInt];
+            
             //grid[1, 0] == grid[1, 1] && grid[1, 0] == grid[1, 2]
             for (int c = 0; c < MATRIX_A; c++)
             {
