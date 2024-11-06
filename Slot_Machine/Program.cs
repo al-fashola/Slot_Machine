@@ -6,7 +6,7 @@ class Program
     {
         const int MATRIX_A = 3;
         const int NUMBER_OF_GAMES_OPTIONS = 4;
-        const int MAX_SLOT_MACHINE_INT = 40;
+        const int MAX_SLOT_MACHINE_INT = 5;
         
         const int CENTER_LINE_MODE = 1;
         const int HORIZONTAL_LINE_MODE = 2;
@@ -21,6 +21,7 @@ class Program
         double wager = 0.0;
         int gameMode = 0;
         
+        Start:
         Console.WriteLine("Let's play a game! Ths name of the game is a slot machine");
         Console.WriteLine("You will have the following options: \n" +
                           $"{CENTER_LINE_MODE} - Play the center line \n" +
@@ -59,7 +60,6 @@ class Program
         }
         
         
-        
         // assign the size of array
         int[,] grid = new int[MATRIX_A,MATRIX_A];
         
@@ -95,8 +95,6 @@ class Program
         int matchCounter = 0;
         int firstValue = 0;
         
-        //Console.WriteLine(centerValue);
-
         // Logical breakdown to validate match in values across diagonals, horizontals, verticals
         // This could be done as a method which checks for all the true cases of matches
         if (gameMode == CENTER_LINE_MODE )
@@ -151,21 +149,50 @@ class Program
                 }
             }
         }
-        if (gameMode == ALL_DIAGONOL_LINE_MODE && 
-            ((grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2]) 
-             || (grid[2, 0] == grid[1, 1] && grid[1, 0] == grid[0, 2])))
+        if (gameMode == ALL_DIAGONOL_LINE_MODE)
         {
-            payoutRate = ALL_DIAGONOL_LINE_PAYOUT;
-            gameWin = true;
+            //((grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2]) 
+            // || (grid[2, 0] == grid[1, 1] && grid[1, 0] == grid[0, 2]))
+            matchCounter = 0;
+            int matchCounterAlt = 0;
+            
+            int centerValueInt = MATRIX_A / 2;
+            int matchValue = grid[centerValueInt, centerValueInt];
+            
+            for (int h = 0, i = 0, j= MATRIX_A-1; h < MATRIX_A; h++, i++, j--)
+            {
+                if (matchValue == grid[h,i]) matchCounter++;
+                if (matchValue == grid[j,i]) matchCounterAlt++;
+            }
+            
+            if (matchCounter == MATRIX_A || matchCounterAlt == MATRIX_A)
+            {
+                payoutRate = ALL_DIAGONOL_LINE_PAYOUT;
+                gameWin = true;
+            }
         }
+        
+        //Win or lose logic
         if (gameWin == false)
         {
             Console.WriteLine("You Lose!");
         }
-            
+        if (gameWin)
+        {
+            Console.WriteLine("You Win!");
+            totalPayout =  payoutRate * wager;
+            Console.WriteLine($"Your total payout is: {totalPayout}");
+        }
         
+        Console.WriteLine("would you like to play again? Y/N");
+        char input = Console.ReadKey().KeyChar;
+        input = char.ToUpper(input);
+        if (input == 'Y')
+        {
+            goto Start;
+        }
         //game win variable == Y and rate % variable value, ask to play again?
-        totalPayout =  payoutRate * wager;
+        
         //print message and calculate payout if won
         
         
