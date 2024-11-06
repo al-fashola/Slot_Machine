@@ -27,17 +27,38 @@ class Program
                           $"{HORIZONTAL_LINE_MODE} - Play all three horizontals \n" +
                           $"{VERTICAL_LINE_MODE} - Play all vertical lines \n" +
                           $"{ALL_DIAGONOL_LINE_MODE} - Play diagonal lines \n");
+       
+        // boolean values to confirm wager and Gamechoice valid entries
+        bool wagerEntrySuccessful;
+        bool gameChoiceSuccessful;
         
-        Console.Write("Please enter your bet now: ");
-        wager = Convert.ToDouble(Console.ReadLine());
-        Console.Write("Enter your choice number: ");
-        gameMode = Convert.ToInt32(Console.ReadLine());
-        //Need to add logic for identifying if it is an integer or try catch for characters
-        while (gameMode <= 0 || gameMode > NUMBER_OF_GAMES_OPTIONS)
+        Console.WriteLine("Please enter your bet now: ");
+        string wagerEntry = Console.ReadLine(); 
+        wagerEntrySuccessful = Double.TryParse(wagerEntry, out wager);
+        
+        //Validate relevant wager values entered and repeat warnings until so
+        while (!wagerEntrySuccessful)
         {
-            Console.WriteLine("Please only enter integer numbers from the list above:");
-            gameMode = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Please enter digits only!");
+            Console.Write("Please enter your bet now: ");
+            wagerEntry = Console.ReadLine(); 
+            wagerEntrySuccessful = Double.TryParse(wagerEntry, out wager);
         }
+        
+        //Validate relevant game choice values entered and repeat warnings until so
+        Console.WriteLine("Enter your choice number: ");
+        string gameEntry = Console.ReadLine(); 
+        gameChoiceSuccessful = int.TryParse(gameEntry, out gameMode);
+
+        while (!gameChoiceSuccessful || (gameMode <= 0 || gameMode > NUMBER_OF_GAMES_OPTIONS))
+        {
+            Console.WriteLine("Please enter only integer numbers from the list above!");
+            Console.Write("Enter your choice number: ");
+            gameEntry = Console.ReadLine(); 
+            gameChoiceSuccessful = int.TryParse(gameEntry, out gameMode);
+        }
+        
+        
         
         // assign the size of array
         int[,] grid = new int[MATRIX_A,MATRIX_A];
