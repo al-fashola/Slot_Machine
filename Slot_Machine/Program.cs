@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        const int MATRIX_A = 3;
+        const int MATRIX_GRID_SIZE = 3;
         const int NUMBER_OF_GAMES_OPTIONS = 4;
         const int MAX_SLOT_MACHINE_INT = 3;
         
@@ -16,6 +16,7 @@ class Program
         const double HORIZONTAL_LINE_PAYOUT = 0.33 ;
         const double VERTICAL_LINE_PAYOUT = 0.25;
         const double ALL_DIAGONOL_LINE_PAYOUT = 0.75;
+        const char CONTINUE_PLAYING_GAME = 'Y';
         
         //Wager and Game mode variables 
         double wager = 0.0;
@@ -61,15 +62,15 @@ class Program
         
         
         // assign the size of array
-        int[,] grid = new int[MATRIX_A,MATRIX_A];
+        int[,] grid = new int[MATRIX_GRID_SIZE,MATRIX_GRID_SIZE];
         
         //assign random integers into array slots
         Random rand = new Random();
 
         // This could be defined as a function/method to be repeatedly called for slot game replays
-        for (int i = 0; i < MATRIX_A; i++)
+        for (int i = 0; i < MATRIX_GRID_SIZE; i++)
         {
-            for (int j = 0; j < MATRIX_A; j++)
+            for (int j = 0; j < MATRIX_GRID_SIZE; j++)
             {
                 grid[i,j] = rand.Next(0, MAX_SLOT_MACHINE_INT);
             }
@@ -80,11 +81,11 @@ class Program
         Console.WriteLine(wager);
         */
         
-        for (int x = 0; x < MATRIX_A; x++)
+        for (int i = 0; i < MATRIX_GRID_SIZE; i++)
         {
-            for (int y = 0; y < MATRIX_A; y++)
+            for (int j = 0; j < MATRIX_GRID_SIZE; j++)
             {
-                Console.Write($"|{grid[x, y]}|");
+                Console.Write($"|{grid[i, j]}|");
             }
             Console.WriteLine("");
         }
@@ -99,15 +100,14 @@ class Program
         // This could be done as a method which checks for all the true cases of matches
         if (gameMode == CENTER_LINE_MODE )
         {
-            int centerValueInt = MATRIX_A / 2;
+            int centerValueInt = MATRIX_GRID_SIZE / 2;
             int middleValue = grid[centerValueInt, centerValueInt];
             
-            //grid[1, 0] == grid[1, 1] && grid[1, 0] == grid[1, 2]
-            for (int c = 0; c < MATRIX_A; c++)
+            for (int i = 0; i < MATRIX_GRID_SIZE; i++)
             {
-                if (middleValue == grid[centerValueInt, c]) matchCounter++;
+                if (middleValue == grid[centerValueInt, i]) matchCounter++;
             }
-            if (matchCounter == MATRIX_A)
+            if (matchCounter == MATRIX_GRID_SIZE)
             {
                 payoutRate = CENTER_LINE_PAYOUT;
                 gameWin = true;
@@ -116,15 +116,15 @@ class Program
         if (gameMode == HORIZONTAL_LINE_MODE)
         {
             
-            for (int d = 0; d < MATRIX_A; d++)
+            for (int i = 0; i < MATRIX_GRID_SIZE; i++)
             {
                 matchCounter = 0;
-                firstValue = grid[d, 0];
-                for (int e = 0; e < MATRIX_A; e++)
+                firstValue = grid[i, 0];
+                for (int j = 0; j < MATRIX_GRID_SIZE; j++)
                 {
-                   if (firstValue == grid[d,e]) matchCounter++;
+                   if (firstValue == grid[i,j]) matchCounter++;
                 }
-                if (matchCounter == MATRIX_A)
+                if (matchCounter == MATRIX_GRID_SIZE)
                 {
                     payoutRate = HORIZONTAL_LINE_PAYOUT;
                     gameWin = true;
@@ -134,15 +134,15 @@ class Program
         }
         if (gameMode == VERTICAL_LINE_MODE)
         {
-            for (int f= 0; f < MATRIX_A; f++)
+            for (int i= 0; i < MATRIX_GRID_SIZE; i++)
             {
                 matchCounter = 0;
-                firstValue = grid[0, f];
-                for (int g = 0; g < MATRIX_A; g++)
+                firstValue = grid[0, i];
+                for (int j = 0; j < MATRIX_GRID_SIZE; j++)
                 {
-                    if (firstValue == grid[g,f]) matchCounter++;
+                    if (firstValue == grid[j,i]) matchCounter++;
                 }
-                if (matchCounter == MATRIX_A)
+                if (matchCounter == MATRIX_GRID_SIZE)
                 {
                     payoutRate = VERTICAL_LINE_PAYOUT;
                     gameWin = true;
@@ -157,16 +157,16 @@ class Program
             matchCounter = 0;
             int matchCounterAlt = 0;
             
-            int centerValueInt = MATRIX_A / 2;
+            int centerValueInt = MATRIX_GRID_SIZE / 2;
             int matchValue = grid[centerValueInt, centerValueInt];
             
-            for (int h = 0, i = 0, j= MATRIX_A-1; h < MATRIX_A; h++, i++, j--)
+            for (int h = 0, i = 0, j= MATRIX_GRID_SIZE-1; h < MATRIX_GRID_SIZE; h++, i++, j--)
             {
                 if (matchValue == grid[h,i]) matchCounter++;
                 if (matchValue == grid[j,i]) matchCounterAlt++;
             }
             
-            if (matchCounter == MATRIX_A || matchCounterAlt == MATRIX_A)
+            if (matchCounter == MATRIX_GRID_SIZE || matchCounterAlt == MATRIX_GRID_SIZE)
             {
                 payoutRate = ALL_DIAGONOL_LINE_PAYOUT;
                 gameWin = true;
@@ -188,7 +188,7 @@ class Program
         Console.WriteLine("would you like to play again? Y/N");
         char input = Console.ReadKey().KeyChar;
         input = char.ToUpper(input);
-        if (input == 'Y')
+        if (input == CONTINUE_PLAYING_GAME)
         {
             goto Start;
         }
