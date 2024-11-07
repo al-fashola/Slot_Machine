@@ -192,12 +192,6 @@ class Program
         {
             goto Start;
         }
-        //game win variable == Y and rate % variable value, ask to play again?
-        
-        //print message and calculate payout if won
-        
-        
-      
         
         
     }
