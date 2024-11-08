@@ -21,31 +21,50 @@ class Program
         //Wager and Game mode variables 
         double wager = 0.0;
         int gameMode = 0;
+        double wallet = 0.0;
+        
+        
+        Console.WriteLine("Let's play a game! The name of the game is a slot machine");
+        // boolean values to confirm wallet, wager and game choices are valid entries
+        bool wagerEntrySuccessful;
+        bool gameChoiceSuccessful;
+        bool walletEntrySuccessful;
+        
+        Console.WriteLine("Please enter how much you would like to load in your wallet now: ");
+        string walletEntry = Console.ReadLine(); 
+        walletEntrySuccessful = Double.TryParse(walletEntry, out wallet);
+        
+        while (!walletEntrySuccessful)
+        {
+            Console.WriteLine("Please enter digits only!");
+            Console.Write("Please enter your Wallet amount now: ");
+            walletEntry = Console.ReadLine(); 
+            walletEntrySuccessful = Double.TryParse(walletEntry, out wallet);
+        }
         
         Start:
-        Console.WriteLine("Let's play a game! Ths name of the game is a slot machine");
+        Console.WriteLine($"You currently have ${wallet} loaded in your wallet .");
         Console.WriteLine("You will have the following options: \n" +
                           $"{CENTER_LINE_MODE} - Play the center line \n" +
                           $"{HORIZONTAL_LINE_MODE} - Play all three horizontals \n" +
                           $"{VERTICAL_LINE_MODE} - Play all vertical lines \n" +
                           $"{ALL_DIAGONOL_LINE_MODE} - Play diagonal lines \n");
        
-        // boolean values to confirm wager and Gamechoice valid entries
-        bool wagerEntrySuccessful;
-        bool gameChoiceSuccessful;
+        
         
         Console.WriteLine("Please enter your bet now: ");
         string wagerEntry = Console.ReadLine(); 
         wagerEntrySuccessful = Double.TryParse(wagerEntry, out wager);
         
         //Validate relevant wager values entered and repeat warnings until so
-        while (!wagerEntrySuccessful)
+        while (!wagerEntrySuccessful || wager > wallet || wager == 0.0)
         {
-            Console.WriteLine("Please enter digits only!");
+            Console.WriteLine($"Please enter digits only! The wager amount will need to be greater than 0 and less than or equal to the funds currently in your wallet. Wallet: {wallet}");
             Console.Write("Please enter your bet now: ");
             wagerEntry = Console.ReadLine(); 
             wagerEntrySuccessful = Double.TryParse(wagerEntry, out wager);
         }
+        
         
         //Validate relevant game choice values entered and repeat warnings until so
         Console.WriteLine("Enter your choice number: ");
@@ -177,21 +196,33 @@ class Program
         if (gameWin == false)
         {
             Console.WriteLine("You Lose!");
+            wallet = (wallet - wager);
         }
         if (gameWin)
         {
             Console.WriteLine("You Win!");
             totalPayout =  payoutRate * wager;
+            wallet = totalPayout + wallet ;
             Console.WriteLine($"Your total payout is: {totalPayout}");
+            Console.WriteLine($"The total in your wallet is: {wallet}");
         }
-        
-        Console.WriteLine("would you like to play again? Y/N");
-        char input = Console.ReadKey().KeyChar;
-        input = char.ToUpper(input);
-        if (input == CONTINUE_PLAYING_GAME)
+
+        if (wallet == 0.0)
         {
-            goto Start;
+            Console.WriteLine("Game Over! You currently have no funds left.");
         }
+        else
+        {   
+            Console.WriteLine($"You currently have ${wallet} in your wallet");
+            Console.WriteLine("would you like to play again? Y/N");
+            char input = Console.ReadKey().KeyChar;
+            input = char.ToUpper(input);
+            if (input == CONTINUE_PLAYING_GAME)
+            {
+                goto Start;
+            }
+        }  
+        
         
         
     }
