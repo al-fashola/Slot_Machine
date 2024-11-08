@@ -18,17 +18,15 @@ class Program
         const double ALL_DIAGONOL_LINE_PAYOUT = 0.75;
         const char CONTINUE_PLAYING_GAME = 'Y';
         
-        //Wager and Game mode variables 
-        double wager = 0.0;
-        int gameMode = 0;
-        double wallet = 0.0;
-        
         
         Console.WriteLine("Let's play a game! The name of the game is a slot machine");
         // boolean values to confirm wallet, wager and game choices are valid entries
         bool wagerEntrySuccessful;
         bool gameChoiceSuccessful;
         bool walletEntrySuccessful;
+        
+        
+        double wallet = 0.0;
         
         Console.WriteLine("Please enter how much you would like to load in your wallet now: ");
         string walletEntry = Console.ReadLine(); 
@@ -51,6 +49,7 @@ class Program
                           $"{ALL_DIAGONOL_LINE_MODE} - Play diagonal lines \n");
        
         
+        double wager = 0.0;
         
         Console.WriteLine("Please enter your bet now: ");
         string wagerEntry = Console.ReadLine(); 
@@ -65,6 +64,7 @@ class Program
             wagerEntrySuccessful = Double.TryParse(wagerEntry, out wager);
         }
         
+        int gameMode = 0;
         
         //Validate relevant game choice values entered and repeat warnings until so
         Console.WriteLine("Enter your choice number: ");
@@ -214,7 +214,7 @@ class Program
         else
         {   
             Console.WriteLine($"You currently have ${wallet} in your wallet");
-            Console.WriteLine("would you like to play again? Y/N");
+            Console.WriteLine($"would you like to play again? {CONTINUE_PLAYING_GAME}/N");
             char input = Console.ReadKey().KeyChar;
             input = char.ToUpper(input);
             if (input == CONTINUE_PLAYING_GAME)
